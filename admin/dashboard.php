@@ -1,8 +1,8 @@
-<?php 
-
-  require("../conn.php");
+<?php
+session_start();
+require("../conn.php");
 ?>
-        
+
 <html lang="en">
 
 <head>
@@ -69,9 +69,10 @@
           <i class="fas fa-user mr-3"></i>User</a>
         <a href="userData.php" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-table mr-3"></i>Data</a>
-        <!-- <a href="#" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-map mr-3"></i>Maps</a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect">
+        <button class="btn btn-dne waves-effect adminLogout" data-key="logout">
+          <i class="fas fa-map mr-3"></i>Logout</button>
+
+        <!--<a href="#" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-money-bill-alt mr-3"></i>Orders</a> -->
       </div>
     </div>
@@ -160,6 +161,28 @@
             alert("Successfully deleted");
 
             window.location.reload();
+          }
+        }
+      });
+    });
+
+
+    $(".adminLogout").click(function(e){
+      e.preventDefault();
+
+      let simply = $(this).data("key");
+      let data = {
+        "saa":"man"
+      }
+
+      $.ajax({
+        type: "POST",
+        data: data,
+        url: "../response/logoutResponse.php",
+        success: function(response) {
+          if (response) {
+            console.log(response);
+            window.location.href = "../index.php";
           }
         }
       });

@@ -70,6 +70,9 @@ require("../conn.php");
           <i class="fas fa-user mr-3"></i>User</a>
         <a href="#" class="list-group-item list-group-item-action active waves-effect">
           <i class="fas fa-table mr-3"></i>Data</a>
+        <button class="btn btn-dne waves-effect adminLogout" data-key="logout">
+          <i class="fas fa-map mr-3"></i>Logout</button>
+
         <!-- <a href="#" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-map mr-3"></i>Maps</a>
         <a href="#" class="list-group-item list-group-item-action waves-effect">
@@ -107,7 +110,7 @@ require("../conn.php");
         //   array_push($lostee,)
         $dmmy['image'] = $row["image"];
         $dmmy['lostee'] = $row["Lostee"];
-        array_push($lostee,$dmmy);
+        array_push($lostee, $dmmy);
         // echo '<tr>';
         // echo '<td>' . $row["image"] . '</td>';
         // echo '<td>' . $row["Lostee"] . '</td>';
@@ -122,24 +125,24 @@ require("../conn.php");
         // echo '<tr>';
         $d['founder'] = $row["Founder"];
         $d['mob'] = $row["mobile_number"];
-        array_push($founder,$d);
+        array_push($founder, $d);
         // echo '<td>' . $row["Founder"] . '</td>';
         // echo '<td>' . $row["mobile_number"] . '</td>';
         // echo '</tr>';
 
       }
       $var = count($lostee);
-    //   while($var!=0){
-    //     //   echo '<tr>';
-    //     // echo '<td>' . $row["image"] . '</td>';
-    //     // echo '<td>' . $row["Lostee"] . '</td>';
-    //     // echo '</tr>';
-    //     echo "here";
-    //     print_r( $lostee);
-    //     $var-=1;
-    //   }
+      //   while($var!=0){
+      //     //   echo '<tr>';
+      //     // echo '<td>' . $row["image"] . '</td>';
+      //     // echo '<td>' . $row["Lostee"] . '</td>';
+      //     // echo '</tr>';
+      //     echo "here";
+      //     print_r( $lostee);
+      //     $var-=1;
+      //   }
 
-    for($i = 0;$i<$var;$i++){
+      for ($i = 0; $i < $var; $i++) {
         echo $i;
         echo '<tr>';
         echo '<td>' . $lostee[$i]["image"] . '</td>';
@@ -147,9 +150,9 @@ require("../conn.php");
         echo '<td>' . $founder[$i]["founder"] . '</td>';
         echo '<td>' . $founder[$i]["mob"] . '</td>';
         echo '</tr>';
-    }
+      }
 
-    
+
       echo '</tbody>
       </table>';
       ?>
@@ -186,28 +189,49 @@ require("../conn.php");
       $('.dataTables_length').addClass('bs-select');
     });
 
-    $(".btnClass").click(function(e) {
-
+    $(".adminLogout").click(function(e) {
       e.preventDefault();
-      let user_id = $(this).data('key');
+
+      let simply = $(this).data("key");
       let data = {
-        user_id: user_id
+        "saa": "man"
       }
 
       $.ajax({
         type: "POST",
         data: data,
-        url: "../response/deleteFromAdmin.php",
+        url: "../response/logoutResponse.php",
         success: function(response) {
           if (response) {
             console.log(response);
-            alert("Successfully deleted");
-
-            window.location.reload();
+            window.location.href = "../index.php";
           }
         }
       });
     });
+
+    // $(".btnClass").click(function(e) {
+
+    //   e.preventDefault();
+    //   let user_id = $(this).data('key');
+    //   let data = {
+    //     user_id: user_id
+    //   }
+
+    //   $.ajax({
+    //     type: "POST",
+    //     data: data,
+    //     url: "../response/deleteFromAdmin.php",
+    //     success: function(response) {
+    //       if (response) {
+    //         console.log(response);
+    //         alert("Successfully deleted");
+
+    //         window.location.reload();
+    //       }
+    //     }
+    //   });
+    // });
   </script>
 </body>
 
