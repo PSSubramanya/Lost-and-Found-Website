@@ -206,9 +206,7 @@ if (mysqli_num_rows($res) > 0) {
                         alert("confirmed");
                         window.location.href = "index.php";
                     }
-
                 });
-
             });
         });
     </script>

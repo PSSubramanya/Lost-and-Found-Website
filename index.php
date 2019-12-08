@@ -1,42 +1,53 @@
-<?php 
-	require("conn.php");
-	session_start();
-	if (isset($_POST['register'])) {
-		$fullname = $_POST['fullname'];
-		$password = md5($_POST['password']);
-		$mobile_number = $_POST['mobile_number'];
-		$query = "INSERT INTO user (`full_name`,`mobile_number`,`password`) VALUES('$fullname','$mobile_number','$password')";
-		$result = mysqli_query($conn, $query);
-		if ($result) {
-			echo '<script>alert("user registerd successfully");</script>';
-		} else {
-			echo '<script>alert("Error while registering");</script>';
-		}
+<?php
+require("conn.php");
+session_start();
+if (isset($_POST['register'])) {
+	$fullname = $_POST['fullname'];
+	$password = md5($_POST['password']);
+	$mobile_number = $_POST['mobile_number'];
+	$query = "INSERT INTO user (`full_name`,`mobile_number`,`password`) VALUES('$fullname','$mobile_number','$password')";
+	$result = mysqli_query($conn, $query);
+	if ($result) {
+		echo '<script>alert("user registerd successfully");</script>';
+	} else {
+		echo '<script>alert("Error while registering");</script>';
 	}
+}
+
+if (isset($_POST['Adminlogin'])) {
+	$mobile = $_POST['mobile'];
+	$password = ($_POST['passwd']);
 	
-	if (isset($_POST['login'])) {
-		$mobile_number = $_POST['mobile_number'];
-		$password = md5($_POST['password']);
-	
-		// echo "$mobile_number" . $password;
-	
-		$query = "SELECT * FROM user WHERE mobile_number = '$mobile_number' AND password = '$password' ";
-		$result = mysqli_query($conn, $query);
-	
-		// var_dump($result);
-	
-		// $row = mysqli_fetch_array($result);
-		if (mysqli_num_rows($result) == 1) {
-			$_SESSION['mobile_number'] = $mobile_number;
-			if($row = mysqli_fetch_assoc($result)){
-				$_SESSION['user_id'] = $row['user_id'];
-			}
-			echo '<script>alert("Logged In");</script>';
-		} else {
-			echo '<script>alert("Invalid Credentials");</script>';
-		}
+
+	if($mobile=="7204958072" and $password=="admin"){
+		header("Location: admin/dashboard.php");
+		$_SESSION['admin_id'] = $mobile;
 	}
-	
+}
+
+if (isset($_POST['login'])) {
+	$mobile_number = $_POST['mobile_number'];
+	$password = md5($_POST['password']);
+
+	// echo "$mobile_number" . $password;
+
+	$query = "SELECT * FROM user WHERE mobile_number = '$mobile_number' AND password = '$password' ";
+	$result = mysqli_query($conn, $query);
+
+	// var_dump($result);
+
+	// $row = mysqli_fetch_array($result);
+	if (mysqli_num_rows($result) == 1) {
+		$_SESSION['mobile_number'] = $mobile_number;
+		if ($row = mysqli_fetch_assoc($result)) {
+			$_SESSION['user_id'] = $row['user_id'];
+		}
+		echo '<script>alert("Logged In");</script>';
+	} else {
+		echo '<script>alert("Invalid Credentials");</script>';
+	}
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,12 +96,12 @@
 	<!-- Material Design Bootstrap -->
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">
 	<style>
-		body{
+		body {
 			background: url('images/bg_1.jpg')no-repeat !important;
-			background-size:cover;
-	
+			background-size: cover;
+
 		}
-		</style>
+	</style>
 </head>
 
 <body>
@@ -116,8 +127,7 @@
 						<a href="#" class="dropdown-item"><i class="ion-ios-document mr-2"></i> Documentation</a>
 					</div>
 				</li>
-				<li class="nav-item cta"><a href="#" class="nav-link icon d-flex align-items-center"><i
-							class="ion-ios-cloud-download mr-2"></i> Download</a></li>
+				<li class="nav-item cta"><a href="#" class="nav-link icon d-flex align-items-center"><i class="ion-ios-cloud-download mr-2"></i> Download</a></li>
 			</ul>
 		</div>
 	</div>
@@ -135,20 +145,20 @@
 						<h4 class="mb-5">For Campus Purpose</h4>
 						<!-- <p><a href="#" class="btn btn-primary px-5 py-4 mb-2"><i class="ion-ios-cloud-download mr-2"></i>LOST</a> <a href="#" class="btn btn-dark px-5 py-4 mb-2"><i class="ion-ios-code mr-2"></i>FOUND</a></p> -->
 						<!-- <p><a data-toggle="modal" href="Lost.html" data-target="#modalLRForm" class="btn btn-secondary px-5 py-4 mb-2"><i class="fa fa-thumbs-o-down" -->
-					
-						<?php 	
-							if(isset($_SESSION['mobile_number'])){
-								echo'<p><a  href="trial.php"  class="btn btn-secondary px-5 py-4 mb-2"><i class="fa fa-thumbs-o-down"
+
+						<?php
+						if (isset($_SESSION['mobile_number'])) {
+							echo '<p><a  href="trial.php"  class="btn btn-secondary px-5 py-4 mb-2"><i class="fa fa-thumbs-o-down"
 								aria-hidden="true"></i>LOST</a>';
-							}else{
-								echo'<p><a href="" class="btn btn-secondary px-5 py-4 mb-2" data-toggle="modal" data-target="#modalLRForm"><i class="fa fa-thumbs-o-down"
+						} else {
+							echo '<p><a href="" class="btn btn-secondary px-5 py-4 mb-2" data-toggle="modal" data-target="#modalLRForm"><i class="fa fa-thumbs-o-down"
 								aria-hidden="true"></i>LOST</a></p>';
-							}
+						}
 						?>
-									<a href="Found.php"
-								class="btn btn-dark px-5 py-4 mb-2"><i class="fa fa-thumbs-o-up"
-									aria-hidden="true"></i> FOUND</a></p>
-									<!-- 
+						<a href="Found.php" class="btn btn-dark px-5 py-4 mb-2"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> FOUND</a></p>
+
+						<a class="btn btn-dark px-5 py-4 mb-2" data-toggle="modal" data-target="#modalLRFormAdmin"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Admin-login</a></p>
+						<!-- 
 									
 									// echo isset($_SESSION['email']);
 										// if(isset($_SESSION['mobile_number'])){
@@ -182,90 +192,141 @@
 	</section>
 
 
-    <!--Modal: Login / Register Form-->
+	<!--Modal: Login / Register Form-->
 	<div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog cascading-modal" role="document">
-            <!--Content-->
-            <div class="modal-content">
-                <!--Modal cascading tabs-->
-                <div class="modal-c-tabs">
+		<div class="modal-dialog cascading-modal" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Modal cascading tabs-->
+				<div class="modal-c-tabs">
 
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fas fa-user mr-1"></i>
-                                Login</a>
-                        </li>
-                        <li class="nav-item">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fas fa-user mr-1"></i>
+								Login</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fas fa-user-plus mr-1"></i>
+								Register</a>
+						</li>
+					</ul>
+
+					<!-- Tab panels -->
+					<div class="tab-content">
+						<!--Panel 7-->
+						<div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+							<!--Body-->
+							<form action="index.php" method="post">
+								<div class="modal-body mb-1">
+									<div class="md-form form-sm mb-5">
+										<i class="fas fa-envelope prefix"></i>
+										<input type="text" id="modalLRInput10" class="form-control form-control-sm validate" name="mobile_number">
+										<label data-error="wrong" data-success="right" for="modalLRInput10">Your Mobile NUmber</label>
+									</div>
+
+									<div class="md-form form-sm mb-4">
+										<i class="fas fa-lock prefix"></i>
+										<input type="password" id="modalLRInput11" class="form-control form-control-sm validate" name="password">
+										<label data-error="wrong" data-success="right" for="modalLRInput11">Your password</label>
+									</div>
+									<div class="text-center mt-2">
+										<button class="btn btn-warning" type="submit" name="login">Log in <i class="fas fa-sign-in ml-1"></i></button>
+									</div>
+								</div>
+							</form>
+						</div>
+						<!--/.Panel 7-->
+
+						<!--Panel 8-->
+						<div class="tab-pane fade" id="panel8" role="tabpanel">
+							<!--Body-->
+							<form action="index.php" method="post">
+								<div class="modal-body">
+									<div class="md-form form-sm mb-5">
+										<i class="fas fa-envelope prefix"></i>
+										<input type="text" id="modalLRInput12" class="form-control form-control-sm validate" name="fullname">
+										<label data-error="wrong" data-success="right" for="modalLRInput12">Full Name</label>
+									</div>
+
+									<div class="md-form form-sm mb-5">
+										<i class="fas fa-lock prefix"></i>
+										<input type="password" id="modalLRInput13" class="form-control form-control-sm validate" name="password">
+										<label data-error="wrong" data-success="right" for="modalLRInput13">Your password</label>
+									</div>
+
+									<div class="md-form form-sm mb-4">
+										<i class="fas fa-lock prefix"></i>
+										<input type="text" id="modalLRInput14" class="form-control form-control-sm validate" name="mobile_number">
+										<label data-error="wrong" data-success="right" for="modalLRInput14">Mobile Number</label>
+									</div>
+
+									<div class="text-center form-sm mt-2">
+										<button class="btn btn-warning" type="submit" name="register">Sign up <i class="fas fa-sign-in ml-1"></i></button>
+									</div>
+
+								</div>
+							</form>
+							<!--/.Panel 8-->
+						</div>
+
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="modalLRFormAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog cascading-modal" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Modal cascading tabs-->
+				<div class="modal-c-tabs">
+
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fas fa-user mr-1"></i>
+								Login</a>
+						</li>
+						<!-- <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fas fa-user-plus mr-1"></i>
                                 Register</a>
-                        </li>
-                    </ul>
+                        </li> -->
+					</ul>
 
-                    <!-- Tab panels -->
-                    <div class="tab-content">
-                        <!--Panel 7-->
-                        <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
-                            <!--Body-->
-                            <form action="index.php" method="post">
-                                <div class="modal-body mb-1">
-                                    <div class="md-form form-sm mb-5">
-                                        <i class="fas fa-envelope prefix"></i>
-                                        <input type="text" id="modalLRInput10" class="form-control form-control-sm validate" name="mobile_number">
-                                        <label data-error="wrong" data-success="right" for="modalLRInput10">Your Mobile NUmber</label>
-                                    </div>
+					<!-- Tab panels -->
+					<div class="tab-content">
+						<!--Panel 7-->
+						<div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+							<!--Body-->
+							<form action="index.php" method="post">
+								<div class="modal-body mb-1">
+									<div class="md-form form-sm mb-5">
+										<i class="fas fa-envelope prefix"></i>
+										<input type="text" id="modalLRInput10" class="form-control form-control-sm validate" name="mobile">
+										<label data-error="wrong" data-success="right" for="modalLRInput10">Your Mobile Number</label>
+									</div>
 
-                                    <div class="md-form form-sm mb-4">
-                                        <i class="fas fa-lock prefix"></i>
-                                        <input type="password" id="modalLRInput11" class="form-control form-control-sm validate" name="password">
-                                        <label data-error="wrong" data-success="right" for="modalLRInput11">Your password</label>
-                                    </div>
-                                    <div class="text-center mt-2">
-                                        <button class="btn btn-warning" type="submit" name="login">Log in <i class="fas fa-sign-in ml-1"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <!--/.Panel 7-->
-
-                        <!--Panel 8-->
-                        <div class="tab-pane fade" id="panel8" role="tabpanel">
-                            <!--Body-->
-                            <form action="index.php" method="post">
-                                <div class="modal-body">
-                                    <div class="md-form form-sm mb-5">
-                                        <i class="fas fa-envelope prefix"></i>
-                                        <input type="text" id="modalLRInput12" class="form-control form-control-sm validate" name="fullname">
-                                        <label data-error="wrong" data-success="right" for="modalLRInput12">Full Name</label>
-                                    </div>
-
-                                    <div class="md-form form-sm mb-5">
-                                        <i class="fas fa-lock prefix"></i>
-                                        <input type="password" id="modalLRInput13" class="form-control form-control-sm validate" name="password">
-                                        <label data-error="wrong" data-success="right" for="modalLRInput13">Your password</label>
-                                    </div>
-
-                                    <div class="md-form form-sm mb-4">
-                                        <i class="fas fa-lock prefix"></i>
-                                        <input type="text" id="modalLRInput14" class="form-control form-control-sm validate" name="mobile_number">
-                                        <label data-error="wrong" data-success="right" for="modalLRInput14">Mobile Number</label>
-                                    </div>
-
-                                    <div class="text-center form-sm mt-2">
-                                        <button class="btn btn-warning" type="submit" name="register">Sign up <i class="fas fa-sign-in ml-1"></i></button>
-                                    </div>
-
-                                </div>
-                            </form>
-                            <!--/.Panel 8-->
-                        </div>
-
-                    </div>
-                </div>
-                <!--/.Content-->
-            </div>
-        </div>
-        <!--Modal: Login / Register Form-->
+									<div class="md-form form-sm mb-4">
+										<i class="fas fa-lock prefix"></i>
+										<input type="password" id="modalLRInput11" class="form-control form-control-sm validate" name="passwd">
+										<label data-error="wrong" data-success="right" for="modalLRInput11">Your password</label>
+									</div>
+									<div class="text-center mt-2">
+										<button class="btn btn-warning" type="submit" name="Adminlogin">Log in <i class="fas fa-sign-in ml-1"></i></button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--Modal: Login / Register Form-->
 
 	<!-- <section class="ftco-section goto-here pb-0">
 		<div class="inner-container">
@@ -426,17 +487,21 @@
 			<div class="row">
 				<div class="col-md-3">
 					<div class="form-group has-default">
-						 <!-- <input type="text" class="form-control" placeholder="Default"> -->
-					<font color="blue"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></font>
+						<!-- <input type="text" class="form-control" placeholder="Default"> -->
+						<font color="blue">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+						</font>
 					</div>
 				</div>
 				<div class="col-md-3">
 					<div class="form-group has-success">
 						<!-- <input type="text" class="form-control" id="exampleInput2" placeholder="Success" required> -->
-						 <!-- <span class="icon success">
+						<!-- <span class="icon success">
 							<i class="ion-ios-checkmark"></i>
 						</span>  -->
-					<font color="blue"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></font>
+						<font color="blue">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+						</font>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -636,8 +701,8 @@
 						<div class="col-md-4 mb-md-0 mb-4 ftco-animate">
 							<div class=""> -->
 
-								<!-- Progress bar 1 -->
-								<!-- <div class="progress mx-auto" data-value='90'>
+	<!-- Progress bar 1 -->
+	<!-- <div class="progress mx-auto" data-value='90'>
 									<span class="progress-left">
 										<span class="progress-bar border-primary"></span>
 									</span>
@@ -649,15 +714,15 @@
 										<div class="h5">90<sup class="small">%</sup></div>
 									</div>
 								</div> -->
-								<!-- END -->
-							<!-- </div>
+	<!-- END -->
+	<!-- </div>
 						</div>
 
 						<div class="col-md-4 mb-md-0 mb-4 ftco-animate">
 							<div class=""> -->
 
-								<!-- Progress bar 1 -->
-								<!-- <div class="progress mx-auto" data-value='80'>
+	<!-- Progress bar 1 -->
+	<!-- <div class="progress mx-auto" data-value='80'>
 									<span class="progress-left">
 										<span class="progress-bar border-primary"></span>
 									</span>
@@ -669,15 +734,15 @@
 										<div class="h5">80<sup class="small">%</sup></div>
 									</div>
 								</div> -->
-								<!-- END -->
-							<!-- </div>
+	<!-- END -->
+	<!-- </div>
 						</div>
 
 						<div class="col-md-4 mb-md-0 mb-4 ftco-animate">
 							<div class=""> -->
 
-								<!-- Progress bar 1 -->
-								<!-- <div class="progress mx-auto" data-value='75'>
+	<!-- Progress bar 1 -->
+	<!-- <div class="progress mx-auto" data-value='75'>
 									<span class="progress-left">
 										<span class="progress-bar border-primary"></span>
 									</span>
@@ -689,13 +754,13 @@
 										<div class="h5">75<sup class="small">%</sup></div>
 									</div>
 								</div> -->
-								<!-- END -->
-							<!-- </div>
+	<!-- END -->
+	<!-- </div>
 						</div>
 					</div>
 				</div> </div> </div> </section> -->
 
-				<!-- <section class="ftco-section">
+	<!-- <section class="ftco-section">
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12">
@@ -828,7 +893,7 @@
 						</div>
 					</div> -->
 
-					<!-- <div class="px-0 bg-warning navbar-wrap mb-2">
+	<!-- <div class="px-0 bg-warning navbar-wrap mb-2">
 						<div class="container">
 							<div class="row">
 								<div class="col-md-12">
@@ -926,9 +991,9 @@
 						</div>
 					</div>
 				</section> -->
-				<!-- - - - - -end- - - - -  -->
+	<!-- - - - - -end- - - - -  -->
 
-				<!-- <section class="ftco-section ftco-section-2" id="navigationTabs">
+	<!-- <section class="ftco-section ftco-section-2" id="navigationTabs">
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-6 mb-5 mb-md-0">
@@ -1020,9 +1085,9 @@
 						</div>
 					</div>
 				</section> -->
-				<!-- - - - - -end- - - - -  -->
+	<!-- - - - - -end- - - - -  -->
 
-				<!-- <section class="ftco-section" id="notifications">
+	<!-- <section class="ftco-section" id="notifications">
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12">
@@ -1088,9 +1153,9 @@
 						</div>
 					</div>
 				</section> -->
-				<!-- - - - - -end- - - - -  -->
+	<!-- - - - - -end- - - - -  -->
 
-				<!-- <section class="ftco-section" id="typography">
+	<!-- <section class="ftco-section" id="typography">
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12">
@@ -1191,9 +1256,9 @@
 						</div>
 					</div>
 				</section> -->
-				<!-- - - - - -end- - - - -  -->
+	<!-- - - - - -end- - - - -  -->
 
-				<!-- <section class="ftco-section" id="images">
+	<!-- <section class="ftco-section" id="images">
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12">
@@ -1248,9 +1313,9 @@
 						</div>
 					</div>
 				</section> -->
-				<!-- - - - - -end- - - - -  -->
+	<!-- - - - - -end- - - - -  -->
 
-				<!-- <section class="ftco-section ftco-section-2" id="javascriptsComponents">
+	<!-- <section class="ftco-section ftco-section-2" id="javascriptsComponents">
 					<div class="container">
 						<div class="row">
 							<div class="col-md-12">
@@ -1268,8 +1333,8 @@
 												Launch demo modal
 											</button> -->
 
-											<!-- Modal -->
-											<!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+	<!-- Modal -->
+	<!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
 												aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 												<div class="modal-dialog modal-dialog-centered" role="document">
 													<div class="modal-content">
@@ -1304,8 +1369,8 @@
 											<div class="w-100">
 												<form action="" method="post" class="datepickers">
 													<div class="form-group"> -->
-														<!-- <label class="label-control" for="id_start_datetime">Datetime picker</label> -->
-														<!-- <div class="input-group date" id="id_0">
+	<!-- <label class="label-control" for="id_start_datetime">Datetime picker</label> -->
+	<!-- <div class="input-group date" id="id_0">
 															<input type="text" value="10/01/2019 05:32:00 PM"
 																class="form-control" required />
 														</div>
@@ -1424,23 +1489,23 @@
 						</div>
 					</div>
 				</section> -->
-				<!-- - - - - -end- - - - -  -->
+	<!-- - - - - -end- - - - -  -->
 
-				<!-- <section class="ftco-section ftco-no-pt ftco-no-pb" id="carousel">
+	<!-- <section class="ftco-section ftco-no-pt ftco-no-pb" id="carousel">
 					<div class="container-fluid px-0">
 						<div class="row no-gutters justify-content-center">
 							<div class="col-md-12">
 								<div id="demo" class="carousel slide" data-ride="carousel"> -->
 
-									<!-- Indicators -->
-									<!-- <ul class="carousel-indicators">
+	<!-- Indicators -->
+	<!-- <ul class="carousel-indicators">
 										<li data-target="#demo" data-slide-to="0" class="active"></li>
 										<li data-target="#demo" data-slide-to="1"></li>
 										<li data-target="#demo" data-slide-to="2"></li>
 									</ul> -->
 
-									<!-- The slideshow -->
-									<!-- <div class="carousel-inner">
+	<!-- The slideshow -->
+	<!-- <div class="carousel-inner">
 										<div class="carousel-item active img"
 											style="background-image: url(images/slider-1.jpg); height: 750px;">
 											<div class="overlay"></div>
@@ -1486,8 +1551,8 @@
 										</div>
 									</div> -->
 
-									<!-- Left and right controls -->
-									<!-- <a class="carousel-control-prev" href="#demo" data-slide="prev">
+	<!-- Left and right controls -->
+	<!-- <a class="carousel-control-prev" href="#demo" data-slide="prev">
 										<span class="ion-ios-arrow-round-back"></span>
 									</a>
 									<a class="carousel-control-next" href="#demo" data-slide="next">
@@ -1500,9 +1565,9 @@
 				</section>
  -->
 
-				<!-- - - - - -end- - - - -  -->
+	<!-- - - - - -end- - - - -  -->
 
-				<!-- <section class="ftco-section ftco-section-2">
+	<!-- <section class="ftco-section ftco-section-2">
 					<div class="container">
 						<div class="row justify-content-center">
 							<div class="col-md-9 text-center">
@@ -1516,9 +1581,9 @@
 						</div>
 					</div>
 				</section> -->
-				<!-- - - - - -end- - - - -  -->
+	<!-- - - - - -end- - - - -  -->
 
-				<!-- <section class="ftco-section ftco-section-2 section-signup page-header img"
+	<!-- <section class="ftco-section ftco-section-2 section-signup page-header img"
 					style="background-image: url(images/bg_2.jpg);">
 					<div class="overlay"></div>
 					<div class="container">
@@ -1578,9 +1643,9 @@
 						</div>
 					</div>
 				</section> -->
-				<!-- - - - - -end- - - - -  -->
+	<!-- - - - - -end- - - - -  -->
 
-				<!-- <section class="ftco-section ftco-section-2">
+	<!-- <section class="ftco-section ftco-section-2">
 					<div class="container">
 						<div class="row justify-content-center">
 							<div class="col-md-9 text-center">
@@ -1593,34 +1658,34 @@
 						</div>
 					</div>
 				</section> -->
-				<!-- - - - - -end- - - - -  -->
+	<!-- - - - - -end- - - - -  -->
 
 
-				<!-- <footer class="ftco-section ftco-section-2">
+	<!-- <footer class="ftco-section ftco-section-2">
 					<div class="col-md-12 text-center">
 						<p class="mb-0"> -->
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							<!-- Copyright &copy;
+	<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+	<!-- Copyright &copy;
 							<script>
 								document.write(new Date().getFullYear());
 
 							</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by
 							<a href="https://colorlib.com" target="_blank">Colorlib</a> -->
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						<!-- </p>
+	<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+	<!-- </p>
 					</div>
 				</footer>
 
 			</div> -->
 
-			<!-- loader -->
-			<!-- <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+	<!-- loader -->
+	<!-- <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
 					<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
 					<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
 						stroke="#F96D00" /></svg></div> -->
 
-			<!--Modal: Login / Register Form-->
-			<!-- <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	<!--Modal: Login / Register Form-->
+	<!-- <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
 				aria-hidden="true">
 				<div class="modal-dialog cascading-modal" role="document">
 
@@ -1737,31 +1802,27 @@
 				</div>
 			</div> -->
 
-			<script type="text/javascript"
-				src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-			<script src="js/jquery-migrate-3.0.1.min.js"></script>
-			<script src="js/jquery.easing.1.3.js"></script>
-			<script src="js/jquery.waypoints.min.js"></script>
-			<script src="js/jquery.stellar.min.js"></script>
-			<script src="js/owl.carousel.min.js"></script>
-			<script src="js/jquery.magnific-popup.min.js"></script>
-			<script src="js/aos.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="js/jquery.easing.1.3.js"></script>
+	<script src="js/jquery.waypoints.min.js"></script>
+	<script src="js/jquery.stellar.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/aos.js"></script>
 
-			<script src="js/nouislider.min.js"></script>
-			<script src="js/moment-with-locales.min.js"></script>
-			<script src="js/bootstrap-datetimepicker.min.js"></script>
-			<script src="js/main.js"></script>
-			<!-- Bootstrap tooltips -->
-			<script type="text/javascript"
-				src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
-			<!-- Bootstrap core JavaScript -->
-			<script type="text/javascript"
-				src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-			<!-- MDB core JavaScript -->
-			<script type="text/javascript"
-				src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
-        <!-- Bootstrap tooltips -->
-    
+	<script src="js/nouislider.min.js"></script>
+	<script src="js/moment-with-locales.min.js"></script>
+	<script src="js/bootstrap-datetimepicker.min.js"></script>
+	<script src="js/main.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
+	<!-- Bootstrap tooltips -->
+
 </body>
 
 </html>
