@@ -92,11 +92,11 @@ require("../conn.php");
           <tr>
             <th class="th-sm">Image
             </th>
+            <th class="th-sm">Lostee
+            </th>
             <th class="th-sm">Founder Name
             </th>
             <th class="th-sm">Founder Number
-            </th>
-            <th class="th-sm">Lostee
             </th>
           </tr>
         </thead>
@@ -143,9 +143,9 @@ require("../conn.php");
       //   }
 
       for ($i = 0; $i < $var; $i++) {
-        echo $i;
+        // echo $i;
         echo '<tr>';
-        echo '<td>' . $lostee[$i]["image"] . '</td>';
+        echo '<td><img src=../images/found_uploaded/' . $lostee[$i]["image"] . ' style="width:50px;height:50px;border-radius:50%;"></td>';
         echo '<td>' . $lostee[$i]["lostee"] . '</td>';
         echo '<td>' . $founder[$i]["founder"] . '</td>';
         echo '<td>' . $founder[$i]["mob"] . '</td>';

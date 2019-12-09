@@ -17,9 +17,9 @@ if (isset($_POST['register'])) {
 if (isset($_POST['Adminlogin'])) {
 	$mobile = $_POST['mobile'];
 	$password = ($_POST['passwd']);
-	
 
-	if($mobile=="7204958072" and $password=="admin"){
+
+	if ($mobile == "7204958072" and $password == "admin") {
 		header("Location: admin/dashboard.php");
 		$_SESSION['admin_id'] = $mobile;
 	}
@@ -62,32 +62,26 @@ if (isset($_POST['login'])) {
 
 	<link rel="stylesheet" href="css/animate.css">
 
-
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
-
 	<!-- Bootstrap core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<!-- Material Design Bootstrap -->
 	<link href="css/mdb.min.css" rel="stylesheet">
 	<!-- Your custom styles (optional) -->
 	<!-- <link href="css/style.css" rel="stylesheet"> -->
-
-
 	<link rel="stylesheet" href="css/owl.carousel.min.css">
 	<link rel="stylesheet" href="css/owl.theme.default.min.css">
 	<link rel="stylesheet" href="css/magnific-popup.css">
 
 	<link rel="stylesheet" href="css/aos.css">
 
-	<link rel="stylesheet" href="css/ionicons.min.css">
+	<!-- <link rel="stylesheet" href="css/ionicons.min.css"> -->
 
 	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 	<link rel="stylesheet" href="css/nouislider.css">
 
 
-	<link rel="stylesheet" href="css/flaticon.css">
+	<!-- <link rel="stylesheet" href="css/flaticon.css"> -->
 	<link rel="stylesheet" href="css/icomoon.css">
 	<link rel="stylesheet" href="css/style.css">
 	<!-- Font Awesome -->
@@ -142,7 +136,7 @@ if (isset($_POST['login'])) {
 			<div class="row description align-items-center justify-content-center">
 				<div class="col-md-8 text-center">
 					<div class="text">
-						<h2>LOST AND FOUND</h2>
+						<h1 style="color: white;margin-top:10%;font-weight:bold;">LOST AND FOUND</h1>
 						<h4 class="mb-5">For Campus Purpose</h4>
 						<!-- <p><a href="#" class="btn btn-primary px-5 py-4 mb-2"><i class="ion-ios-cloud-download mr-2"></i>LOST</a> <a href="#" class="btn btn-dark px-5 py-4 mb-2"><i class="ion-ios-code mr-2"></i>FOUND</a></p> -->
 						<!-- <p><a data-toggle="modal" href="Lost.html" data-target="#modalLRForm" class="btn btn-secondary px-5 py-4 mb-2"><i class="fa fa-thumbs-o-down" -->
@@ -158,7 +152,7 @@ if (isset($_POST['login'])) {
 						?>
 						<a href="Found.php" class="btn btn-dark px-5 py-4 mb-2"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> FOUND</a></p>
 
-						<p><a class="btn btn-dark px-5 py-4 mb-2" data-toggle="modal" data-target="#modalLRFormAdmin"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i>Admin-login</a></p>
+						<p><a class="btn btn-dark px-5 py-4 mb-2" data-toggle="modal" data-target="#modalLRFormAdmin"><i class="fa fa-user" aria-hidden="true"></i>Admin-login</a></p>
 						<!-- 
 									
 									// echo isset($_SESSION['email']);
@@ -204,11 +198,11 @@ if (isset($_POST['login'])) {
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fas fa-user mr-1"></i>
+							<a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-user mr-1"></i>
 								Login</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fas fa-user-plus mr-1"></i>
+							<a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fa fa-user-plus mr-1"></i>
 								Register</a>
 						</li>
 					</ul>
@@ -221,18 +215,18 @@ if (isset($_POST['login'])) {
 							<form action="index.php" method="post">
 								<div class="modal-body mb-1">
 									<div class="md-form form-sm mb-5">
-										<i class="fas fa-envelope prefix"></i>
-										<input type="text" id="modalLRInput10" class="form-control form-control-sm validate" name="mobile_number">
+										<i class="fa fa-envelope prefix"></i>
+										<input type="text" id="modalLRInput10" class="form-control form-control-sm validate" name="mobile_number" style="color: black;">
 										<label data-error="wrong" data-success="right" for="modalLRInput10">Your Mobile NUmber</label>
 									</div>
 
 									<div class="md-form form-sm mb-4">
-										<i class="fas fa-lock prefix"></i>
-										<input type="password" id="modalLRInput11" class="form-control form-control-sm validate" name="password">
+										<i class="fa fa-lock prefix"></i>
+										<input type="password" id="modalLRInput11" class="form-control form-control-sm validate" name="password" style="color: black;">
 										<label data-error="wrong" data-success="right" for="modalLRInput11">Your password</label>
 									</div>
 									<div class="text-center mt-2">
-										<button class="btn btn-warning" type="submit" name="login">Log in <i class="fas fa-sign-in ml-1"></i></button>
+										<button class="btn btn-warning" type="submit" name="login">Log in <i class="fa fa-sign-in ml-1"></i></button>
 									</div>
 								</div>
 							</form>
@@ -245,25 +239,25 @@ if (isset($_POST['login'])) {
 							<form action="index.php" method="post">
 								<div class="modal-body">
 									<div class="md-form form-sm mb-5">
-										<i class="fas fa-envelope prefix"></i>
+										<i class="fa fa-envelope prefix"></i>
 										<input type="text" id="modalLRInput12" class="form-control form-control-sm validate" name="fullname">
 										<label data-error="wrong" data-success="right" for="modalLRInput12">Full Name</label>
 									</div>
 
 									<div class="md-form form-sm mb-5">
-										<i class="fas fa-lock prefix"></i>
+										<i class="fa fa-lock prefix"></i>
 										<input type="password" id="modalLRInput13" class="form-control form-control-sm validate" name="password">
 										<label data-error="wrong" data-success="right" for="modalLRInput13">Your password</label>
 									</div>
 
 									<div class="md-form form-sm mb-4">
-										<i class="fas fa-lock prefix"></i>
+										<i class="fa fa-lock prefix"></i>
 										<input type="text" id="modalLRInput14" class="form-control form-control-sm validate" name="mobile_number">
 										<label data-error="wrong" data-success="right" for="modalLRInput14">Mobile Number</label>
 									</div>
 
 									<div class="text-center form-sm mt-2">
-										<button class="btn btn-warning" type="submit" name="register">Sign up <i class="fas fa-sign-in ml-1"></i></button>
+										<button class="btn btn-warning" type="submit" name="register">Sign up <i class="fa fa-sign-in ml-1"></i></button>
 									</div>
 
 								</div>
@@ -289,7 +283,7 @@ if (isset($_POST['login'])) {
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fas fa-user mr-1"></i>
+							<a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-user mr-1"></i>
 								Login</a>
 						</li>
 						<!-- <li class="nav-item">
@@ -306,18 +300,18 @@ if (isset($_POST['login'])) {
 							<form action="index.php" method="post">
 								<div class="modal-body mb-1">
 									<div class="md-form form-sm mb-5">
-										<i class="fas fa-envelope prefix"></i>
+										<i class="fa fa-envelope prefix"></i>
 										<input type="text" id="modalLRInput10" class="form-control form-control-sm validate" name="mobile">
 										<label data-error="wrong" data-success="right" for="modalLRInput10">Your Mobile Number</label>
 									</div>
 
 									<div class="md-form form-sm mb-4">
-										<i class="fas fa-lock prefix"></i>
+										<i class="fa fa-lock prefix"></i>
 										<input type="password" id="modalLRInput11" class="form-control form-control-sm validate" name="passwd">
 										<label data-error="wrong" data-success="right" for="modalLRInput11">Your password</label>
 									</div>
 									<div class="text-center mt-2">
-										<button class="btn btn-warning" type="submit" name="Adminlogin">Log in <i class="fas fa-sign-in ml-1"></i></button>
+										<button class="btn btn-warning" type="submit" name="Adminlogin">Log in <i class="fa fa-sign-in ml-1"></i></button>
 									</div>
 								</div>
 							</form>
@@ -329,7 +323,7 @@ if (isset($_POST['login'])) {
 	</div>
 	<!--Modal: Login / Register Form-->
 
-	
+
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="js/jquery-migrate-3.0.1.min.js"></script>
 	<script src="js/jquery.easing.1.3.js"></script>

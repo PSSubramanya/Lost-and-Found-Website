@@ -148,7 +148,7 @@ session_start();
         e.preventDefault();
 
         let key = $(this).data('key');
-        console.log("booo = " + key);
+        // console.log("booo = " + key);
         let data = {
           'key': key
         }
